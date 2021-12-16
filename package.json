@@ -2,7 +2,6 @@
   "name": "jglitch",
   "version": "0.0.1",
   "description": "Glitch effects",
-  "type": "module",
   "main": "src/index.ts",
   "repository": {
     "type": "git",

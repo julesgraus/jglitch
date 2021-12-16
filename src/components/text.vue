@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <span aria-hidden="true" :class="props.class + '__before'">{{ value }}</span>
-    <span :class="props.class">{{ value }}</span>
-    <span aria-hidden="true" :class="props.class + '__after'">{{ value }}</span>
+  <div :class="templateClass">
+    <span aria-hidden="true" :class="[templateClass + '__label', templateClass + '__label--before']">{{ value }}</span>
+    <span :class="templateClass">{{ value }}</span>
+    <span aria-hidden="true" :class="[templateClass + '__label', templateClass + '__label--after']">{{ value }}</span>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import {defineComponent} from "vue";
 
 export default defineComponent({
-  name: "glitch-image",
+  name: "glitch-text",
   props: {
     value: {
       type: String,
@@ -18,11 +18,17 @@ export default defineComponent({
     },
     class: {
       type: String,
-      default: 'glitch_image'
+      default: 'glitch_text'
     }
   },
   setup(props) {
-
+    return {
+      templateClass: props.class
+    }
   }
 })
 </script>
+
+<style lang="scss">
+  @import "../style/text";
+</style>

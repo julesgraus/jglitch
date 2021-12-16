@@ -1,0 +1,25 @@
+.glitch_text {
+  position: relative;
+  --intensity: 0.05em;
+  --negative_intensity: -0.05em;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.glitch_text__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.glitch_text__label--before {
+  text-shadow: var(--negative_intensity) var(--negative_intensity) 0.01em rgba(255, 0, 0, .8);
+}
+
+.glitch_text__label--main {
+
+}
+
+.glitch_text__label--after {
+  text-shadow: var(--intensity) var(--intensity) 0.01em rgba(0, 0, 255, .8);
+}
