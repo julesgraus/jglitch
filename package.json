@@ -1,0 +1,23 @@
+{
+  "name": "jglitch",
+  "version": "0.0.1",
+  "description": "Glitch effects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julesgraus/jglitch.git"
+  },
+  "keywords": [
+    "Glitch",
+    "effects"
+  ],
+  "author": "Jules Graus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julesgraus/jglitch/issues"
+  },
+  "homepage": "https://github.com/julesgraus/jglitch#readme"
+}
