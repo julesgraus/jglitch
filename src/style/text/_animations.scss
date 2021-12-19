@@ -1,0 +1,51 @@
+@keyframes #{$block-name} {
+  0% {
+    left: calc(var(--intensity) * -1);
+    top: calc(var(--intensity) * -1);
+  }
+
+  10% {
+    left: calc(var(--intensity) * -0.2);
+    top: calc(var(--intensity) * -0.4);
+  }
+
+  20% {
+    left: var(--intensity);
+    top: var(--intensity);
+  }
+
+  30% {
+    left: calc(var(--intensity) * 2);
+    top: calc(var(--intensity) * -2);
+  }
+
+  40% {
+    left: calc(var(--intensity) * 3);
+    top: calc(var(--intensity) * 3);
+  }
+
+  50% {
+    left: calc((var(--intensity) / 2) * -1);
+    top: var(--intensity);
+  }
+
+  60% {
+    left: calc((var(--intensity)) * -1);
+    top: calc(var(--intensity) * -1);
+  }
+
+  70% {
+    left: calc((var(--intensity)) * 1);
+    top: calc(var(--intensity) * 0.5);
+  }
+
+  80% {
+    left: calc((var(--intensity)));
+    top: calc(var(--intensity) * 1);
+  }
+
+  90% {
+    left: calc((var(--intensity) * -0.5));
+    top: calc(var(--intensity) * 0.2);
+  }
+}

@@ -1,34 +1,78 @@
 <template>
-  <div :class="templateClass">
-    <span aria-hidden="true" :class="[templateClass + '__label', templateClass + '__label--before']">{{ value }}</span>
-    <span :class="templateClass">{{ value }}</span>
-    <span aria-hidden="true" :class="[templateClass + '__label', templateClass + '__label--after']">{{ value }}</span>
+  <div :class="[blockName]" :style="controlledStyle">
+    <span aria-hidden="true"
+      v-for="positionModifierPart in glitchElementModifiers"
+      :key="positionModifierPart"
+      :class="[
+        bemClass(blockName, elementName),
+        !enabled || bemClass(blockName, elementName, glitchModifierName),
+        bemClass(blockName, elementName, positionModifierPart),
+      ]"
+    >{{ value }}</span>
+    <span :class="[
+        bemClass(blockName, elementName),
+        !enabled || bemClass(blockName, elementName, glitchModifierName),
+    ]">{{ value }}</span>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { bemClass } from "../scripts/helpers";
+import {computed, defineComponent} from "vue";
 
 export default defineComponent({
   name: "glitch-text",
   props: {
     value: {
       type: String,
-      default: ''
+      required: true
     },
-    class: {
+    enabled: {
+      type: Boolean,
+      default: true
+    },
+    intensity: {
+      type: Number,
+      default: null,
+    },
+    hoverIntensity: {
+      type: Number,
+      default: null
+    },
+    blockName: {
       type: String,
-      default: 'glitch_text'
+      default: 'jgt'
+    },
+    elementName: {
+      type: String,
+      default: 'word'
+    },
+    glitchModifierName: {
+      type: String,
+      default: 'glitch'
+    },
+    glitchElementModifiers: {
+      type: Array,
+      default: () => {
+        return ['bottom', 'top'];
+      }
     }
   },
   setup(props) {
+    /**
+     * Inline style, controlled with javascript
+     */
+    const controlledStyle = computed(() => {
+      let style: {[key: string]: number|string} = {}
+      if(props.intensity) style['--intensity'] = props.intensity + 'em';
+      if(props.hoverIntensity) style['--hover-intensity'] = props.hoverIntensity + 'em';
+      return style;
+    })
+
     return {
-      templateClass: props.class
+      controlledStyle,
+      bemClass
     }
   }
 })
 </script>
-
-<style lang="scss">
-  @import "../style/text";
-</style>

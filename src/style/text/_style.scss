@@ -1,0 +1,48 @@
+.#{$block-name} {
+  --intensity: 0.01em;
+  --hover-intensity: 0.05em;
+  display: inline-grid;
+}
+
+.#{$block-name}:hover {
+  --intensity: var(--hover-intensity) !important;
+}
+
+.#{$block-name}__#{$element-name} {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+
+  animation-timing-function: steps(10);
+  animation-duration: 325ms;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+  text-shadow: #b740b7;
+}
+
+.#{$block-name}__#{$element-name}--#{$top-glitch-modifier} {
+  text-shadow: calc(var(--intensity) * -2) calc(var(--intensity) * -2) calc(var(--intensity) * 2) $top-glitch-color;
+  clip-path: polygon(0 0, 100% 0, 100% 60%, 0 35%);
+  display: none;
+
+  animation-duration: 650ms;
+}
+
+.#{$block-name}__#{$element-name}--#{$bottom-glitch-modifier} {
+  text-shadow: calc(var(--intensity) * 2) calc(var(--intensity) * 2) calc(var(--intensity) * 2) $bottom-glitch-color;
+  clip-path: polygon(0 64%, 100% 60%, 100% 100%, 0% 100%);
+  display: none;
+
+  animation-duration: 423ms;
+}
+
+.#{$block-name}__#{$element-name}--#{$glitch-modifier} {
+  animation-name: $block-name;
+  display: block;
+}
+
+@media (prefers-reduced-motion) {
+  .#{$block-name}__#{$element-name} {
+    animation: none !important;
+  }
+}
