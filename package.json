@@ -1,6 +1,6 @@
 {
   "name": "jglitch",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Glitch effects",
   "main": "src/index.ts",
   "repository": {

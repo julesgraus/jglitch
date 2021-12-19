@@ -12,19 +12,31 @@ Notice that I just started this project. More info will be reflected here soon. 
 Install it via ```npm install jglitch```
 
 ## Implementation
-Import it and let vue use it like this:
-```js
+You can choose to install components [globally](https://v3.vuejs.org/guide/component-registration.html#global-registration) or [locally](https://v3.vuejs.org/guide/component-registration.html#local-registration).
+### Global installation
+This chapter explains how to make all glitch components available for all of your components.\
+\
+In your main typescript script you import it like this:
+```ts
 import jglitch from "jglitch"; //Add this
 const app = createApp(App); //You should have a line like this already
 app.use(jglitch); // Add this.
 ```
-In your sass files you can choose to load all styles for all components like this:
+In your sass file you can import the styles for all components at once like this:
 ```sass
 @import "~jglitch/src/style";
 ```
-Or just for a specific vue component only like this:
+
+### Local installation
+This chapter explains how to make the glitch components available only in the components you want to use them.
+First open the component in which you'd like to have a glitch component. Then import it just below the opening ```<script>``` tag like this for exmaple:
+```ts
+import { glitchTextController, glitchText } from "jglitch"
+```
+Then in your main scss file or component style tag (with lang=scss) you'd import the styles for the components:
 ```sass
 @import "~jglitch/src/style/text/text";
+@import "~jglitch/src/style/glitch_text_controller/glitch_text_controller";
 ```
 
 ## Usage
@@ -62,7 +74,7 @@ Add this to your vue component's template to show the controller:
 <glitch-text-controller/>
 ```
 
-## Customisation
+## Customization
 You can customize the components to your likings by importing specific sass files and override others. 
 Just open one of the pre-made ones to see what's imported, and what you want to override. You'll find them in the directory
 ```~jglitch/src/style/```. Remember, the tilde `~`refers to the ```node_modules``` folder.\
