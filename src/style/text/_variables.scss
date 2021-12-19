@@ -1,10 +1,10 @@
 /** BEM SETTINGS **/
-$block-name: jgt;
-$element-name: word;
-$glitch-modifier: glitch;
-$top-glitch-modifier: top;
-$bottom-glitch-modifier: bottom;
+$jgt-block-name: jgt !default;
+$jgt-element-name: word !default;
+$jgt-glitch-modifier: glitch !default;
+$jgt-top-glitch-modifier: top !default;
+$jgt-bottom-glitch-modifier: bottom !default;
 
 /** COLOR SETTINGS **/
-$top-glitch-color: rgba(255, 0, 0, .8);
-$bottom-glitch-color: rgba(0, 60, 255, 0.8);
+$jgt-top-glitch-color: rgba(255, 0, 0, .8) !default;
+$jgt-bottom-glitch-color: rgba(0, 60, 255, 0.8) !default;

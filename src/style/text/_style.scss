@@ -1,14 +1,14 @@
-.#{$block-name} {
+.#{$jgt-block-name} {
   --intensity: 0.01em;
   --hover-intensity: 0.05em;
   display: inline-grid;
 }
 
-.#{$block-name}:hover {
+.#{$jgt-block-name}:hover {
   --intensity: var(--hover-intensity) !important;
 }
 
-.#{$block-name}__#{$element-name} {
+.#{$jgt-block-name}__#{$jgt-element-name} {
   position: relative;
   grid-column: 1;
   grid-row: 1;
@@ -20,29 +20,29 @@
   text-shadow: #b740b7;
 }
 
-.#{$block-name}__#{$element-name}--#{$top-glitch-modifier} {
-  text-shadow: calc(var(--intensity) * -2) calc(var(--intensity) * -2) calc(var(--intensity) * 2) $top-glitch-color;
+.#{$jgt-block-name}__#{$jgt-element-name}--#{$jgt-top-glitch-modifier} {
+  text-shadow: calc(var(--intensity) * -2) calc(var(--intensity) * -2) calc(var(--intensity) * 2) $jgt-top-glitch-color;
   clip-path: polygon(0 0, 100% 0, 100% 60%, 0 35%);
   display: none;
 
   animation-duration: 650ms;
 }
 
-.#{$block-name}__#{$element-name}--#{$bottom-glitch-modifier} {
-  text-shadow: calc(var(--intensity) * 2) calc(var(--intensity) * 2) calc(var(--intensity) * 2) $bottom-glitch-color;
+.#{$jgt-block-name}__#{$jgt-element-name}--#{$jgt-bottom-glitch-modifier} {
+  text-shadow: calc(var(--intensity) * 2) calc(var(--intensity) * 2) calc(var(--intensity) * 2) $jgt-bottom-glitch-color;
   clip-path: polygon(0 64%, 100% 60%, 100% 100%, 0% 100%);
   display: none;
 
   animation-duration: 423ms;
 }
 
-.#{$block-name}__#{$element-name}--#{$glitch-modifier} {
-  animation-name: $block-name;
+.#{$jgt-block-name}__#{$jgt-element-name}--#{$jgt-glitch-modifier} {
+  animation-name: $jgt-block-name;
   display: block;
 }
 
 @media (prefers-reduced-motion) {
-  .#{$block-name}__#{$element-name} {
+  .#{$jgt-block-name}__#{$jgt-element-name} {
     animation: none !important;
   }
 }
