@@ -45,7 +45,7 @@ You can pass in props to the component. Here is a list of them:
 | glitch-element-modifiers | The modifier parts that of the BEM class names that will be used on the span elements that emphasize the glitch | String[] | no       | ["bottom", "top"] |
 
 ### Text glitch controller
-Shows a glitch text with a controller to help you find the correct values for the properties. Only for development purposes
+Shows a glitch text with a controller to help you find the correct values for the properties. Only for development purposes\
 ![Text glitch controller](./readme_assets/controller.png)
 
 ```js
