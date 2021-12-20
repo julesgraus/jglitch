@@ -48,4 +48,9 @@
     left: calc((var(--intensity) * -0.5));
     top: calc(var(--intensity) * 0.2);
   }
+
+  100% {
+    left: calc(var(--intensity) * -0.2);
+    top: calc(var(--intensity) * -0.4);
+  }
 }

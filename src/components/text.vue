@@ -1,5 +1,5 @@
 <template>
-  <div :class="[blockName]" :style="controlledStyle">
+  <div :class="[blockName]" :style="controlledStyle" :key="forceUpdateKey">
     <span aria-hidden="true"
       v-for="positionModifierPart in glitchElementModifiers"
       :key="positionModifierPart"
@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { bemClass } from "../scripts/helpers";
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, ref, watch} from "vue";
 
 export default defineComponent({
   name: "glitch-text",
@@ -69,7 +69,12 @@ export default defineComponent({
       return style;
     })
 
+    //Needed to force safari to re-render the component, and re-init the @keyframes animation.
+    let forceUpdateKey = ref(0);
+    watch(() => [props.intensity, props.hoverIntensity], () => forceUpdateKey.value++)
+
     return {
+      forceUpdateKey,
       controlledStyle,
       bemClass
     }

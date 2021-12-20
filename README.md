@@ -23,7 +23,7 @@ const app = createApp(App); //You should have a line like this already
 app.use(jglitch); // Add this.
 ```
 In your sass file you can import the styles for all components at once like this:
-```sass
+```scss
 @import "~jglitch/src/style";
 ```
 
@@ -34,7 +34,7 @@ First open the component in which you'd like to have a glitch component. Then im
 import { glitchTextController, glitchText } from "jglitch"
 ```
 Then in your main scss file or component style tag (with lang=scss) you'd import the styles for the components:
-```sass
+```scss
 @import "~jglitch/src/style/text/text";
 @import "~jglitch/src/style/glitch_text_controller/glitch_text_controller";
 ```
@@ -85,10 +85,23 @@ the colors are configured. So to customize them you'll could do it like this:
 1. In your projects sass file, you'll first need to configure the variables you'd want to override.
 2. Then you'll need to import the components sass file ```~jglitch/src/style/text/text```. It could look like this.
 
-```sass
+```scss
 //Your projects other sass code here
 $jgt-top-glitch-color: #5157dc;
 $jgt-bottom-glitch-color: #3ea630;
 @import "~jglitch/src/style/text/text";
 ```
 Feel free to import stuff or leave it out if you want to customize it yourself. It's up to you.
+
+## Known issues
+### Text glitch component
+#### Safari @keyframes problem / bug
+Safari 15.1, probable earlier versions too, do not update css variables / custom properties inside of @keyframes css statements when they change.
+The forceUpdateKey in text.vue does solve this issue a little. Each time you change the ```intensity``` or ```hover-intensity```
+props on the vue component, the component is forced to be redrawn completely. Because this causes the forceUpdateKey variable to update.
+This causes the template to be redrawn. And that fixes the issue when updating ```intensity``` or ```hover-intensity``` props.\
+\
+When you hover over the glitch text component, the ```intensity``` property is updated via a css pseudo :hover class. Because of this, we cannot update the forceUpdateKey
+inside the component.\
+\
+When you only pass in the props once, and don't change them afterwards, there should not be an issue at all.
