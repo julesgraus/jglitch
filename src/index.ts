@@ -1,12 +1,16 @@
 import {App, Plugin} from "vue";
 import glitchText from "./components/text.vue";
+import glitchImage from "./components/image.vue";
 import glitchTextController from "./components/text-controller.vue";
+import glitchImageController from "./components/image-controller.vue";
 import {GlitchConfig} from "./scripts/config";
 
 // Declare install function executed by Vue.use()
 export function install(app: App, options: GlitchConfig) {
     app.component('glitch-text', glitchText)
+    app.component('glitch-image', glitchImage)
     app.component('glitch-text-controller', glitchTextController)
+    app.component('glitch-image-controller', glitchImageController)
 }
 
 // Create module definition for app.use(),
@@ -20,5 +24,7 @@ export default jglitch;
 //To allow to be used as modules (webpack for example);
 export {
     glitchText,
-    glitchTextController
+    glitchImage,
+    glitchTextController,
+    glitchImageController
 }

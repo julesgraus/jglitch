@@ -93,7 +93,6 @@ export default defineComponent({
     glitchText
   },
   setup() {
-
     const defaultGlitchElementModifiers = ['bottom', 'top'];
     const defaultBlockName = 'jgt';
     const defaultElementName = 'word';
