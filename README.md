@@ -67,7 +67,7 @@ You can pass in props to the component. Here is a list of them:
 
 ### Text glitch controller
 Shows a glitch text with a controller to help you find the correct code to implement it. it is meant for development purposes only:\
-![Text glitch controller](./readme_assets/controller.png)
+![Text glitch controller](./readme_assets/glitch_text_controller.png)
 
 Add this to your vue component's template to show the controller:
 ```js
@@ -77,6 +77,12 @@ Add this to your vue component's template to show the controller:
 ### Image glitch
 Gives an image a broken look. It can do that in different ways. This is an example of the "blocks" mode:\
 ![Image glitch](./readme_assets/glitch_image.gif)
+
+Add this to your vue component's template to show a glitching image:
+
+```js
+<glitch-image :src="/images/your_awesome_image.png" />
+```
 
 #### Properties
 You can pass in props to the component. Here is a list of them:
@@ -92,7 +98,9 @@ You can pass in props to the component. Here is a list of them:
 | options              | Configuration options to configure the mode. More info beneath this table                                   | Object  | no       | null        |
 
 #### Blocks mode
-The blocks mode puts fading blocks on the image. These are its options:
+The blocks mode puts fading blocks on the image.\
+![Image glitch](./readme_assets/glitch_image.gif)\
+These are its options:
 
 | Property    | Description                                                                                                     | Type   | Default |
 |-------------|-----------------------------------------------------------------------------------------------------------------|--------|---------|
@@ -101,6 +109,15 @@ The blocks mode puts fading blocks on the image. These are its options:
 | minDuration | The minimum duration that a block is visible in milliseconds.                                                   | Number | 100     |
 | maxDuration | The maximum duration that a block is visible in milliseconds.                                                   | Number | 200     |
 | intensity   | How much the pixels should brighten or darken per frame. It's like the opacity but can be bigger then 1         | Number | 1       |
+
+### Image glitch controller
+Shows a glitch image with a controller to help you find the correct code to implement it. it is meant for development purposes only:\
+![Text glitch controller](./readme_assets/glitch_image_controller.png)
+
+Add this to your vue component's template to show the controller:
+```js
+<glitch-image-controller/>
+````
 
 ## Customization
 You can customize the components to your likings by importing specific sass files and override others. 
