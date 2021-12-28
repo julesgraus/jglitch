@@ -33,7 +33,7 @@ export default defineComponent({
     },
     blockName: {
       type: String,
-      default: 'glitch-image'
+      default: 'jgi-image'
     },
     elementName: {
       type: String,

@@ -74,7 +74,7 @@ export default defineComponent({
     blockOptionControls
   },
   setup() {
-    const defaultBlockName = 'glitch-image';
+    const defaultBlockName = 'jgi-image';
     const defaultElementName = 'picture';
     const defaultHiddenModifierName = 'hidden'
     const defaultEnabled = true;
