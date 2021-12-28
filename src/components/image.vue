@@ -71,7 +71,6 @@ export default defineComponent({
           return;
         }
 
-        console.log(imageRef.value.offsetWidth, imageRef.value.offsetHeight);
         canvasRef.value.width = imageRef.value.offsetWidth;
         canvasRef.value.height = imageRef.value.offsetHeight;
         resolve(image)
@@ -124,7 +123,6 @@ export default defineComponent({
       nextTick(() => {
         sizeCanvas(imageElement).then(drawImageOnCanvas).then(() => glitch())
       })
-      console.log('updated');
     }
 
     const updateCanvasSizeDebounced = debounce(updateCanvasSize, 100)
@@ -151,7 +149,7 @@ export default defineComponent({
       if(started.value) requestAnimationFrameId = window.requestAnimationFrame(step);
     }
 
-    watch([props.enabled, props.options], () => glitch(), {deep: true})
+    watch(props, () => glitch(), {deep: true})
 
     onMounted(() => {
       window.addEventListener('resize', updateCanvasSizeDebounced)

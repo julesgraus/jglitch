@@ -47,22 +47,25 @@
 
 <script lang="ts">
 import {defineComponent, ref, watch} from "vue";
-import {BlockOptions} from "../scripts/imageGlitchers/blocks";
+import {GlitcherOptions} from "../scripts/imageGlitchers/glitcherInterface";
+import {imageBlockDefaultOptions} from "../scripts/defaults/blockOptions";
 
 export default defineComponent({
   name: 'block-option-controls',
-  emits: ['options'],
+  emits: ['update:options'],
+  props: {
+    options: {
+      type: Object as () => GlitcherOptions
+    }
+  },
   setup(props, {emit}) {
-    let options = ref<BlockOptions>({
-      blockSizeX: 32,
-      blockSizeY: 32,
-      minDuration: 100,
-      maxDuration: 200,
-      intensity: 1,
+    let options = ref<GlitcherOptions>(Object.assign({}, props.options))
+
+    watch(() => props.options, (newValue: GlitcherOptions|undefined) => {
+      options.value = Object.assign({}, imageBlockDefaultOptions, newValue)
     })
 
-    emit('options', options.value)
-    watch(options.value, () => emit('options', options.value))
+    watch(() => options, () => emit('update:options', options.value), {deep: true})
 
     return {
       options

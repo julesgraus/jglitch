@@ -27,18 +27,24 @@
              v-model="elementName"
       > element name</label><br>
 
+    <label for="hiddenModifierName">
+      <input type="text"
+             name="hiddenModifierName"
+             v-model="hiddenModifierName"
+      > hidden modifier name</label><br>
+
     <label for="mode">
       <select name="select" id="select" v-model="mode">
-        <option v-for="option in modes" :value="option">{{ option }}</option>
+        <option v-for="option in Object.keys(modesAndOptions)" :value="option">{{ option }}</option>
       </select> mode
     </label><br>
 
-    <block-option-controls v-if="mode === 'blocks'" @options="updateOptions"/>
+    <block-option-controls v-if="mode === 'blocks'" :options="options" @update:options="updateOptions"/>
 
     <glitch-image
-        style="width: 100%; height: 200px"
         v-bind="$attrs"
         :src="src"
+        :mode="mode"
         :enabled="enabled"
         :block-name="blockName"
         :element-name="elementName"
@@ -57,6 +63,8 @@
 import glitchImage from "./image.vue";
 import blockOptionControls from "./block-option-controls.vue";
 import {computed, defineComponent, ref} from "vue";
+import { imageBlockDefaultOptions } from "../scripts/defaults/blockOptions";
+import {GlitcherOptions} from "../scripts/imageGlitchers/glitcherInterface";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -71,7 +79,9 @@ export default defineComponent({
     const defaultHiddenModifierName = 'hidden'
     const defaultEnabled = true;
     const defaultMode = 'blocks';
-    const modes = ['blocks'];
+    const modesAndOptions = {
+      blocks: imageBlockDefaultOptions
+    };
 
     const src = ref('/images/urban.png')
     const enabled = ref(defaultEnabled);
@@ -80,7 +90,7 @@ export default defineComponent({
     const elementName = ref(defaultElementName);
     const hiddenModifierName = ref(defaultHiddenModifierName);
     const mode = ref(defaultMode);
-    const options = ref({});
+    const options = ref(Object.assign({}, imageBlockDefaultOptions));
     const key = ref(0);
 
     const updateOptions = (receivedOptions: {[key: string]: string|number}): void => {
@@ -88,12 +98,23 @@ export default defineComponent({
       Object.keys(receivedOptions).forEach(optionsKey => options.value[optionsKey] = receivedOptions[optionsKey]);
     }
 
+    const stringyfyOptionsForDisplay = (data: GlitcherOptions) => {
+      return JSON.stringify(options.value)
+          .replaceAll(',', ',\n    ')
+          .replace('{', '{\n    ')
+          .replace('}', '\n  }')
+    }
+
     const code = computed(() => {
        return `
 <glitch-image
   src="${src.value}" ${enabled.value !== defaultEnabled ? `
   :enabled="${enabled.value}"` : ''} ${blockName.value !== defaultBlockName ? `
-  :block-name="${blockName.value}"` : ''}
+  block-name="${blockName.value}"` : ''} ${elementName.value !== defaultElementName ? `
+  element-name="${elementName.value}"` : ''} ${hiddenModifierName.value !== defaultHiddenModifierName ? `
+  hidden-modifier-name="${hiddenModifierName.value}"` : ''} ${mode.value !== defaultMode ? `
+  mode="${mode.value}"`: ''} ${JSON.stringify(options.value) !== JSON.stringify(modesAndOptions[mode.value]) ? `
+  :options='${stringyfyOptionsForDisplay(options)}'` : ''}
 />`
     })
 
@@ -105,7 +126,7 @@ export default defineComponent({
       hiddenModifierName,
       code,
       src,
-      modes,
+      modesAndOptions,
       mode,
       options,
       updateOptions,
