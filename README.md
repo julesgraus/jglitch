@@ -1,7 +1,5 @@
 # Introduction
-Add glitch effects to your project
-
-Notice that I just started this project. More info will be reflected here soon. Project is not ready for use in production environments.
+Add glitch effects to your project!
 
 ## Requirements
 - vue ^3.2.26
