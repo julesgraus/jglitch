@@ -3,6 +3,7 @@ import glitchText from "./components/text.vue";
 import glitchImage from "./components/image.vue";
 import glitchTextController from "./components/text-controller.vue";
 import glitchImageController from "./components/image-controller.vue";
+import { Blocks } from "./scripts/imageGlitchers/blocks";
 import {GlitchConfig} from "./scripts/config";
 
 // Declare install function executed by Vue.use()
@@ -26,5 +27,6 @@ export {
     glitchText,
     glitchImage,
     glitchTextController,
-    glitchImageController
+    glitchImageController,
+    Blocks
 }

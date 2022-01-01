@@ -2,38 +2,43 @@ import {getRandomIntInclusive} from "../helpers";
 import {Block} from "../interfaces/blockInterface";
 import {Pixels} from "../pixels";
 import {Timeline} from "../timeline";
-import {GlitcherInterface, GlitcherOptions} from "./glitcherInterface";
+import {GlitcherInterface, GlitcherOptions} from "../interfaces/glitcherInterface";
 import {AbstractGlitcher} from "./abstractGlitcher";
+import {imageBlockDefaultOptions} from "../defaults/blockOptions";
 
-export class Blocks extends AbstractGlitcher implements GlitcherInterface<Blocks> {
-    private blocks: Block[] = [];
+export class Blocks extends AbstractGlitcher implements GlitcherInterface {
+    protected name: string = 'Blocks'
+    private blocks: Block[];
     private timeline: Timeline;
-    private readonly blockSizeX: number = 10;
-    private readonly blockSizeY: number = 10;
-    private readonly blockCount: number = 4;
-    private readonly minDuration: number = 4000;
-    private readonly maxDuration: number = 4000;
-    private readonly intensity: number = 1;
+    private blockSizeX: number = imageBlockDefaultOptions.blockSizeX;
+    private blockSizeY: number = imageBlockDefaultOptions.blockSizeY;
+    private minDuration: number = imageBlockDefaultOptions.minDuration;
+    private maxDuration: number = imageBlockDefaultOptions.maxDuration;
+    private intensity: number = imageBlockDefaultOptions.intensity;
+    private blockCount: number =  4;
 
-    constructor(img: HTMLImageElement, canvas: HTMLCanvasElement, options: BlockOptions|null = null) {
-        super(img, canvas, options);
-        let canvasPixelCount = canvas.width * canvas.height;
+    constructor(options: BlockOptions|null = null) {
+        super(options);
+        this.blocks = [];
+        this.timeline = new Timeline(this.minDuration)
+    }
 
-        if(options) {
-            if (options.blockSizeX) this.blockSizeX = canvas.width / options.blockSizeX;
-            if (options.blockSizeY) this.blockSizeY = canvas.height / options.blockSizeY;
-            if (options.minDuration) this.minDuration = options.minDuration;
-            if (options.maxDuration) this.maxDuration = options.maxDuration;
-            if (options.intensity) this.intensity = options.intensity;
+    private parseOptions() {
+        if(!this.options) return;
+
+        let canvasPixelCount = 0;
+        if(this.canvas) {
+            canvasPixelCount = this.canvas.width * this.canvas.height;
+            if (this.options.blockSizeX && typeof this.options.blockSizeX === 'number') this.blockSizeX = this.canvas.width / this.options.blockSizeX;
+            if (this.options.blockSizeY && typeof this.options.blockSizeY === 'number') this.blockSizeY = this.canvas.height / this.options.blockSizeY;
         }
+
+        if (this.options.minDuration && typeof this.options.minDuration === 'number') this.minDuration = this.options.minDuration;
+        if (this.options.maxDuration && typeof this.options.maxDuration === 'number') this.maxDuration = this.options.maxDuration;
+        if (this.options.intensity && typeof this.options.intensity === 'number') this.intensity = this.options.intensity;
 
         let blockPixelCount = this.blockSizeX * this.blockSizeY;
         this.blockCount = canvasPixelCount / blockPixelCount
-
-        this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-        this.timeline = new Timeline(this.minDuration)
-        this.createNewBlocks();
-        this.setupTimelines();
     }
 
     step(stepAmount: number): void {
@@ -50,6 +55,8 @@ export class Blocks extends AbstractGlitcher implements GlitcherInterface<Blocks
 
     private createNewBlocks() {
         this.blocks = [];
+        if(!this.canvas || !this.context) return;
+
         for (let index = 0; index < this.blockCount; index++) {
             let xPos = getRandomIntInclusive(0, this.canvas.width);
             let yPos = getRandomIntInclusive(0, this.canvas.height);
@@ -98,6 +105,13 @@ export class Blocks extends AbstractGlitcher implements GlitcherInterface<Blocks
             this.createNewBlocks();
             this.setupTimelines()
         })
+    }
+
+    setCanvasElement(canvasElement: HTMLCanvasElement) {
+        super.setCanvasElement(canvasElement);
+        this.createNewBlocks();
+        this.parseOptions();
+        this.setupTimelines();
     }
 }
 

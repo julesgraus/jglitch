@@ -87,20 +87,23 @@ Add this to your vue component's template to show a glitching image:
 #### Properties
 You can pass in props to the component. Here is a list of them:
 
-| Property             | Decription                                                                                                  | Type    | Required | Default     |
-|----------------------|-------------------------------------------------------------------------------------------------------------|---------|----------|-------------|
-| src                  | The src to an image. When on another origin, you must setup cors correctly to prevent tainted canvases.     | String  | yes      | n/a         |
-| enabled              | Enables the glitch effect or not                                                                            | Boolean | no       | true        |
-| block-name           | Them block part of the BEM class names that will be used.                                                   | String  | no       | "jgi-image" |
-| element-name         | The element part of the BEM class names that will be used for the actual img tag and canvas tag.            | String  | no       | "picture"   |
-| hidden-modifier-name | The modifier part of the BEM class names that will be used on the img and canvas to hide them in some cases | String  | no       | "hidden"    |
-| mode                 | The name of the mode. it determines HOW it should glitch the image. See the options below this table        | String  | no       | "blocks"    |
-| options              | Configuration options to configure the mode. More info beneath this table                                   | Object  | no       | null        |
+| Property             | Decription                                                                                                  | Type                | Required | Default     |
+|----------------------|-------------------------------------------------------------------------------------------------------------|---------------------|----------|-------------|
+| src                  | The src to an image. When on another origin, you must setup cors correctly to prevent tainted canvases.     | String              | yes      | n/a         |
+| enabled              | Enables the glitch effect or not                                                                            | Boolean             | no       | true        |
+| block-name           | Them block part of the BEM class names that will be used.                                                   | String              | no       | "jgi-image" |
+| element-name         | The element part of the BEM class names that will be used for the actual img tag and canvas tag.            | String              | no       | "picture"   |
+| hidden-modifier-name | The modifier part of the BEM class names that will be used on the img and canvas to hide them in some cases | String              | no       | "hidden"    |
+| glitcher             | A child class of AbstractGlitcher. That controls the glitching                                              | GlitcherInterface   | no       | "blocks"    |
+| options              | Configuration options to configure the mode. More info beneath this table                                   | Object              | no       | null        |
 
-#### Blocks mode
-The blocks mode puts fading blocks on the image.\
+The glitcher prop must a child class instance of [AbstractGlitcher](./src/scripts/imageGlitchers/abstractGlitcher.ts). This package [includes
+one called "blocks"](./src/scripts/imageGlitchers/blocks.ts) by default. Each glitcher expects options to be passed into its constructor.
+
+#### Blocks glitcher options
+The blocks glitcher puts fading blocks on the image.\
 ![Image glitch](./readme_assets/glitch_image.gif)\
-These are its options:
+These are its options that you can pass into its constructor:
 
 | Property    | Description                                                                                                     | Type   | Default |
 |-------------|-----------------------------------------------------------------------------------------------------------------|--------|---------|
@@ -109,6 +112,22 @@ These are its options:
 | minDuration | The minimum duration that a block is visible in milliseconds.                                                   | Number | 100     |
 | maxDuration | The maximum duration that a block is visible in milliseconds.                                                   | Number | 200     |
 | intensity   | How much the pixels should brighten or darken per frame. It's like the opacity but can be bigger then 1         | Number | 1       |
+
+#### Offset lines glitcher options
+The offset lines glitcher distorts the image by "cutting out" and "offsetting" lines.\
+![Image glitch](./readme_assets/glitch_image_offset_lines.gif)\
+These are its options that you can pass into its constructor:
+
+| Property               | Description                                                                                                     | Type    | Default |
+|------------------------|-----------------------------------------------------------------------------------------------------------------|---------|---------|
+| blockSizeY             | The height of the block. 1 means that it is the same height as the image. 2 means 50% of the image height. Etc. | Number  | 10      |
+| randomizeBlockSize     | If true, blockSizeY will be the maximum size of any block.                                                      | Boolean | true    |
+| blockCount             | How many lines need to be drawn                                                                                 | Number  | 4       |
+| minDuration            | The minimum duration of an animation cycle in milliseconds. After the cycle new blocks will be created.         | Number  | 100     |
+| maxDuration            | The maximum duration of an animation cycle in milliseconds. After the cycle new blocks will be created.         | Number  | 2500    |
+| minDutyCyclePercentage | At what minimum percentage in the animation cycle the glitches must be visible                                  | Number  | 2       |
+| maxDutyCyclePercentage | At what maximum percentage in the animation cycle the glitches must be hidden till the next animation cycle     | Number  | 15      |
+
 
 ### Image glitch controller
 Shows a glitch image with a controller to help you find the correct code to implement it. it is meant for development purposes only:\

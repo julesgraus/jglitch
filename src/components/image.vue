@@ -16,8 +16,7 @@
 <script lang="ts">
 import {defineComponent, nextTick, onMounted, onUnmounted, ref, watch} from "vue";
 import {bemClass, debounce} from "../scripts/helpers";
-import {BlockOptions, Blocks} from "../scripts/imageGlitchers/blocks";
-import {GlitcherInterface} from "../scripts/imageGlitchers/glitcherInterface";
+import {AbstractGlitcher} from "../scripts/imageGlitchers/abstractGlitcher";
 
 export default defineComponent({
   name: "glitch-image",
@@ -43,9 +42,9 @@ export default defineComponent({
       type: String,
       default: 'hidden'
     },
-    mode: {
-      type: String,
-      default: 'blocks'
+    glitcher: {
+      type: Object as () => AbstractGlitcher,
+      required: true
     },
     options: {
       type: Object,
@@ -57,7 +56,6 @@ export default defineComponent({
     let imageRef = ref<HTMLImageElement|null>(null);
     let processing = ref(true);
     let imageLoaded = ref(false);
-    let glitcher = ref<GlitcherInterface<unknown>|null>(null);
     let started = ref<Boolean>(false);
     let previousTimestamp = ref<number|null>(null);
     let requestAnimationFrameId: number|null = null
@@ -91,30 +89,11 @@ export default defineComponent({
       sizeCanvas(imageElement).then(drawImageOnCanvas).then(() => glitch())
     }
 
-    function setupGlitcher() {
-      if(!imageRef.value || !canvasRef.value) return;
-
-      switch (props.mode) {
-        case 'blocks':
-        default:
-          let options: BlockOptions = props.options ? props.options : {
-            blockSizeX: 32,
-            blockSizeY: 32,
-            minDuration: 100,
-            maxDuration: 200,
-            intensity: 1
-          };
-
-          glitcher.value = new Blocks(imageRef.value, canvasRef.value, options)
-      }
-    }
-
     const glitch = function() {
       stop();
-      if(props.enabled) {
-        setupGlitcher();
-        start();
-      }
+      props.glitcher.setCanvasElement(canvasRef.value as HTMLCanvasElement)
+      props.glitcher.setImageElement(imageRef.value as HTMLImageElement)
+      if(props.enabled) start();
     }
 
     const updateCanvasSize = function () {
@@ -139,17 +118,29 @@ export default defineComponent({
     }
 
     const step = function (timestamp: number) {
-      if(!glitcher.value) return;
+      if(!props.glitcher) return;
       if (previousTimestamp.value === null) previousTimestamp.value = timestamp;
       const delta = timestamp - previousTimestamp.value;
 
-      glitcher.value.step(delta);
+      props.glitcher.step(delta);
 
       previousTimestamp.value = timestamp;
       if(started.value) requestAnimationFrameId = window.requestAnimationFrame(step);
     }
 
-    watch(props, () => glitch(), {deep: true})
+    watch(() => {
+      return [
+        props.src,
+        props.enabled,
+        props.blockName,
+        props.elementName,
+        props.hiddenModifierName,
+        props.options,
+        Object.keys(props.glitcher)
+      ];
+    }, () => {
+      glitch()
+    }, {})
 
     onMounted(() => {
       window.addEventListener('resize', updateCanvasSizeDebounced)

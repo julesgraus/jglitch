@@ -1,12 +1,12 @@
 <template>
-  <label for="intensity">
+  <label for="block_count">
     <input type="range"
            name="intensity"
-           min="0.01"
-           max="1"
-           step="0.01"
-           v-model.number="options.intensity"
-    > Intensity</label><br>
+           min="1"
+           max="64"
+           step="1"
+           v-model.number="options.blockCount"
+    > Block count</label><br>
 
   <label for="minDuration">
     <input type="range"
@@ -26,14 +26,23 @@
            v-model.number="options.maxDuration"
     > maxDuration</label><br>
 
-  <label for="blockSizeX">
+  <label for="minDutyCyclePercentage">
     <input type="range"
-           name="blockSizeX"
+           name="minDutyCyclePercentage"
            min="1"
-           max="32"
+           max="100"
            step="1"
-           v-model.number="options.blockSizeX"
-    > blockSizeX</label><br>
+           v-model.number="options.minDutyCyclePercentage"
+    > minDutyCyclePercentage</label><br>
+
+  <label for="maxDutyCyclePercentage">
+    <input type="range"
+           name="maxDutyCyclePercentage"
+           min="1"
+           max="100"
+           step="1"
+           v-model.number="options.maxDutyCyclePercentage"
+    > maxDutyCyclePercentage</label><br>
 
   <label for="blockSizeY">
     <input type="range"
@@ -43,6 +52,12 @@
            step="1"
            v-model.number="options.blockSizeY"
     > blockSizeY</label><br>
+
+  <label for="randomizeBlockSize">
+    <input type="checkbox"
+           name="randomizeBlockSize"
+           v-model="options.randomizeBlockSize"
+    > randomizeBlockSize</label><br>
 </template>
 
 <script lang="ts">
@@ -51,7 +66,7 @@ import {GlitcherOptions} from "../scripts/interfaces/glitcherInterface";
 import {imageBlockDefaultOptions} from "../scripts/defaults/blockOptions";
 
 export default defineComponent({
-  name: 'block-option-controls',
+  name: 'offsetLines-option-controls',
   emits: ['update:options'],
   props: {
     options: {

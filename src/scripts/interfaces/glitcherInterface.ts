@@ -1,4 +1,4 @@
-export interface GlitcherInterface<T> {
+export interface GlitcherInterface {
     step(stepAmount: number): void
 }
 
